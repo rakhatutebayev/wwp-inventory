@@ -29,7 +29,7 @@ services:
       ACCESS_TOKEN_EXPIRE_MINUTES: 30
       CORS_ORIGINS: https://ams.it-uae.com,https://www.ams.it-uae.com
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8001:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -48,7 +48,7 @@ services:
       dockerfile: Dockerfile
     container_name: wwp_ams_frontend
     ports:
-      - "127.0.0.1:3000:80"
+      - "127.0.0.1:3001:80"
     depends_on:
       - backend
     restart: unless-stopped
