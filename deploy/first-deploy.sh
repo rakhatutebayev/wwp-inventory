@@ -12,7 +12,7 @@ SERVER_HOST="88.99.124.218"
 SERVER_USER="root"
 # Пароль можно указать через переменную окружения: export SERVER_PASS="your_password"
 SERVER_PASS="${SERVER_PASS:-hVjrf8Ux}"  # ВАЖНО: После первого развертывания используйте SSH ключи
-GIT_REPO_URL=""  # Укажите URL вашего GitHub репозитория или через: export GIT_REPO_URL="..."
+GIT_REPO_URL="${GIT_REPO_URL:-https://github.com/rakhatutebayev/wwp-inventory.git}"
 PROJECT_DIR="/opt/wwp-ams"
 DOMAIN="ams.it-uae.com"
 

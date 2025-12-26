@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 SERVER_HOST="88.99.124.218"
 SERVER_USER="root"
 PROJECT_DIR="/opt/wwp-ams"
-GIT_REPO_URL="${GIT_REPO_URL}"  # Должен быть установлен через переменную окружения или в скрипте
+GIT_REPO_URL="${GIT_REPO_URL:-https://github.com/rakhatutebayev/wwp-inventory.git}"
 DOMAIN="ams.it-uae.com"
 
 # Проверка конфигурации
