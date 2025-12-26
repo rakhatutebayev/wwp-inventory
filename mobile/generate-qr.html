@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expo QR Code</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+        #qrcode {
+            margin: 20px 0;
+        }
+        input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #3700b3;
+        }
+        .url-display {
+            margin: 20px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            word-break: break-all;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Expo Go QR Code</h1>
+        <p>Введите URL Expo проекта:</p>
+        <input type="text" id="urlInput" placeholder="exp://192.168.0.128:8081 или exp://xxx.tunnel.exp.direct:80" value="exp://192.168.0.128:8081">
+        <div>
+            <button onclick="generateQR()">Сгенерировать QR код</button>
+            <button onclick="copyURL()">Копировать URL</button>
+        </div>
+        <div class="url-display" id="urlDisplay"></div>
+        <div id="qrcode"></div>
+        <p style="color: #666; font-size: 12px; margin-top: 20px;">
+            Откройте Expo Go на телефоне/эмуляторе<br>
+            и отсканируйте QR код
+        </p>
+    </div>
+
+    <script>
+        let qrcode = null;
+
+        function generateQR() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                alert('Введите URL');
+                return;
+            }
+
+            document.getElementById('urlDisplay').textContent = url;
+            
+            const container = document.getElementById('qrcode');
+            container.innerHTML = '';
+            
+            qrcode = new QRCode(container, {
+                text: url,
+                width: 300,
+                height: 300,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function copyURL() {
+            const url = document.getElementById('urlInput').value.trim();
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL скопирован в буфер обмена!');
+            }).catch(() => {
+                alert('Не удалось скопировать URL');
+            });
+        }
+
+        // Генерировать при загрузке страницы
+        window.onload = function() {
+            generateQR();
+        };
+    </script>
+</body>
+</html>
+
+
+

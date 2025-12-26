@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: wwp_ams_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-wwp_ams}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-wwp_ams}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-wwp_ams}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wwp_ams_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wwp_ams_backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-wwp_ams}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-wwp_ams}
+      SECRET_KEY: ${SECRET_KEY}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      CORS_ORIGINS: https://ams.it-uae.com,https://www.ams.it-uae.com
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - wwp_ams_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: wwp_ams_frontend
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - wwp_ams_network
+
+networks:
+  wwp_ams_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    name: wwp_ams_postgres_data
+

@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+deploy/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+backend_output.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Build outputs
+frontend/dist/
+frontend/build/
+mobile/.expo/
+mobile/build/
+mobile/dist/
+
+# Expo
+mobile/.expo-shared/
+mobile/.expo/
+
+# Docker
+*.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
